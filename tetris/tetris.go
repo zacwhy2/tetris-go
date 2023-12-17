@@ -3,18 +3,39 @@ package tetris
 func TetrisMove(piece rune, levels []int) int {
 	switch piece {
 	case 'I':
-		return maxCompletedLinesPieceI(levels)
+		return max([]int{
+			maxCompletedLines(levels, 4, getPositionsPieceI1),
+			maxCompletedLines(levels, 1, getPositionsPieceI2),
+		})
+	case 'J':
+		return -1 // TODO
+	case 'L':
+		return maxCompletedLines(levels, 2, getPositionsPieceL3)
 	case 'O':
 		return maxCompletedLines(levels, 2, getPositionsPieceO)
+	case 'S':
+		return -1 // TODO
+	case 'T':
+		return -1 // TODO
+	case 'Z':
+		return -1 // TODO
 	}
 	return -1
 }
 
-func maxCompletedLinesPieceI(levels []int) int {
-	return max([]int{
-		maxCompletedLines(levels, 4, getPositionsPieceI1),
-		maxCompletedLines(levels, 1, getPositionsPieceI2),
-	})
+func getPositionsPieceL3(levels []int, columnIndex int) map[int]map[int]struct{} {
+	positions := map[int]map[int]struct{}{}
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	max := max([]int{a + 1, b + 3}) - 3
+	positions[max] = map[int]struct{}{}
+	positions[max][columnIndex+1] = struct{}{}
+	positions[max+1] = map[int]struct{}{}
+	positions[max+1][columnIndex+1] = struct{}{}
+	positions[max+2] = map[int]struct{}{}
+	positions[max+2][columnIndex] = struct{}{}
+	positions[max+2][columnIndex+1] = struct{}{}
+	return positions
 }
 
 func getPositionsPieceI1(levels []int, columnIndex int) map[int]map[int]struct{} {
