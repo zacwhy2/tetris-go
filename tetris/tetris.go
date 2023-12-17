@@ -10,7 +10,9 @@ func TetrisMove(piece rune, levels []int) int {
 	case 'J':
 		return -1 // TODO
 	case 'L':
-		return maxCompletedLines(levels, 2, getPositionsPieceL3)
+		return max([]int{
+			maxCompletedLines(levels, 2, getPositionsPieceL3),
+		})
 	case 'O':
 		return maxCompletedLines(levels, 2, getPositionsPieceO)
 	case 'S':
@@ -23,51 +25,53 @@ func TetrisMove(piece rune, levels []int) int {
 	return -1
 }
 
-func getPositionsPieceL3(levels []int, columnIndex int) map[int]map[int]struct{} {
-	positions := map[int]map[int]struct{}{}
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	max := max([]int{a + 1, b + 3}) - 3
-	positions[max] = map[int]struct{}{}
-	positions[max][columnIndex+1] = struct{}{}
-	positions[max+1] = map[int]struct{}{}
-	positions[max+1][columnIndex+1] = struct{}{}
-	positions[max+2] = map[int]struct{}{}
-	positions[max+2][columnIndex] = struct{}{}
-	positions[max+2][columnIndex+1] = struct{}{}
-	return positions
-}
-
 func getPositionsPieceI1(levels []int, columnIndex int) map[int]map[int]struct{} {
-	max := max(levels[columnIndex : columnIndex+4])
+	r := max(levels[columnIndex : columnIndex+4])
 	positions := map[int]map[int]struct{}{}
-	positions[max] = map[int]struct{}{}
-	for i := 0; i < 4; i++ {
-		positions[max][i+columnIndex] = struct{}{}
-	}
+	addPosition(positions, r, columnIndex)
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r, columnIndex+2)
+	addPosition(positions, r, columnIndex+3)
 	return positions
 }
 
 func getPositionsPieceI2(levels []int, columnIndex int) map[int]map[int]struct{} {
+	r := levels[columnIndex]
 	positions := map[int]map[int]struct{}{}
-	level := levels[columnIndex]
-	for i := 0; i < 4; i++ {
-		positions[level+i] = map[int]struct{}{}
-		positions[level+i][columnIndex] = struct{}{}
-	}
+	addPosition(positions, r, columnIndex)
+	addPosition(positions, r+1, columnIndex)
+	addPosition(positions, r+2, columnIndex)
+	addPosition(positions, r+3, columnIndex)
+	return positions
+}
+
+func getPositionsPieceL3(levels []int, columnIndex int) map[int]map[int]struct{} {
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	r := max([]int{a + 1, b + 3}) - 3
+	positions := map[int]map[int]struct{}{}
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r+1, columnIndex+1)
+	addPosition(positions, r+2, columnIndex)
+	addPosition(positions, r+2, columnIndex+1)
 	return positions
 }
 
 func getPositionsPieceO(levels []int, columnIndex int) map[int]map[int]struct{} {
-	max := max(levels[columnIndex : columnIndex+2])
+	r := max(levels[columnIndex : columnIndex+2])
 	positions := map[int]map[int]struct{}{}
-	positions[max] = map[int]struct{}{}
-	positions[max][columnIndex] = struct{}{}
-	positions[max][columnIndex+1] = struct{}{}
-	positions[max+1] = map[int]struct{}{}
-	positions[max+1][columnIndex] = struct{}{}
-	positions[max+1][columnIndex+1] = struct{}{}
+	addPosition(positions, r, columnIndex)
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r+1, columnIndex)
+	addPosition(positions, r+1, columnIndex+1)
 	return positions
+}
+
+func addPosition(p map[int]map[int]struct{}, r int, c int) {
+	if _, ok := p[r]; !ok {
+		p[r] = map[int]struct{}{}
+	}
+	p[r][c] = struct{}{}
 }
 
 func maxCompletedLines(levels []int, width int, fn func([]int, int) map[int]map[int]struct{}) int {
