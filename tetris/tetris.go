@@ -21,7 +21,12 @@ func TetrisMove(piece rune, levels []int) int {
 	case 'S':
 		return -1 // TODO
 	case 'T':
-		return -1 // TODO
+		return max(
+			maxCompletedLines(levels, 3, getPositionsPieceT1),
+			maxCompletedLines(levels, 3, getPositionsPieceT2),
+			maxCompletedLines(levels, 3, getPositionsPieceT3),
+			maxCompletedLines(levels, 3, getPositionsPieceT4),
+		)
 	case 'Z':
 		return -1 // TODO
 	}
@@ -100,6 +105,56 @@ func getPositionsPieceO(levels []int, columnIndex int) map[int]map[int]struct{} 
 	addPosition(positions, r, columnIndex+1)
 	addPosition(positions, r+1, columnIndex)
 	addPosition(positions, r+1, columnIndex+1)
+	return positions
+}
+
+func getPositionsPieceT1(levels []int, columnIndex int) map[int]map[int]struct{} {
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	c := levels[columnIndex+2]
+	r := max(a, b, c)
+	positions := map[int]map[int]struct{}{}
+	addPosition(positions, r, columnIndex)
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r, columnIndex+2)
+	addPosition(positions, r+1, columnIndex+1)
+	return positions
+}
+
+func getPositionsPieceT2(levels []int, columnIndex int) map[int]map[int]struct{} {
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	r := max(a+1, b) - 2
+	positions := map[int]map[int]struct{}{}
+	addPosition(positions, r, columnIndex)
+	addPosition(positions, r+1, columnIndex)
+	addPosition(positions, r+1, columnIndex+1)
+	addPosition(positions, r+2, columnIndex)
+	return positions
+}
+
+func getPositionsPieceT3(levels []int, columnIndex int) map[int]map[int]struct{} {
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	c := levels[columnIndex+2]
+	r := max(a+1, b+2, c+1) - 2
+	positions := map[int]map[int]struct{}{}
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r+1, columnIndex)
+	addPosition(positions, r+1, columnIndex+1)
+	addPosition(positions, r+1, columnIndex+2)
+	return positions
+}
+
+func getPositionsPieceT4(levels []int, columnIndex int) map[int]map[int]struct{} {
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	r := max(a, b+1) - 2
+	positions := map[int]map[int]struct{}{}
+	addPosition(positions, r, columnIndex+1)
+	addPosition(positions, r+1, columnIndex)
+	addPosition(positions, r+1, columnIndex+1)
+	addPosition(positions, r+2, columnIndex+1)
 	return positions
 }
 
