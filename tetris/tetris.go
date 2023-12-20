@@ -46,7 +46,7 @@ func getPositionsPieceI1(levels []int, columnIndex int) []position {
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
 	d := levels[columnIndex+3]
-	r := max(a, b, c, d)
+	r := max(a+1, b+1, c+1, d+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -64,7 +64,8 @@ I2 looks like:
 	X
 */
 func getPositionsPieceI2(levels []int, columnIndex int) []position {
-	r := levels[columnIndex]
+	a := levels[columnIndex]
+	r := max(a+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r + 1, columnIndex},
@@ -83,7 +84,7 @@ L1 looks like:
 func getPositionsPieceL1(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
-	r := max(a, b)
+	r := max(a+1, b+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -102,7 +103,7 @@ func getPositionsPieceL2(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
-	r := max(a, b, c)
+	r := max(a+1, b+1, c+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -158,7 +159,7 @@ O looks like:
 func getPositionsPieceO(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
-	r := max(a, b)
+	r := max(a+1, b+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -177,7 +178,7 @@ func getPositionsPieceT1(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
-	r := max(a, b, c)
+	r := max(a+1, b+1, c+1) - 1
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -196,7 +197,7 @@ T2 looks like:
 func getPositionsPieceT2(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
-	r := max(a+1, b) - 2
+	r := max(a+2, b+1) - 2
 	return []position{
 		position{r, columnIndex},
 		position{r + 1, columnIndex},
@@ -208,8 +209,7 @@ func getPositionsPieceT2(levels []int, columnIndex int) []position {
 /*
 T3 looks like:
 
-	 X
-	XX
+	XXX
 	 X
 */
 func getPositionsPieceT3(levels []int, columnIndex int) []position {
@@ -228,13 +228,14 @@ func getPositionsPieceT3(levels []int, columnIndex int) []position {
 /*
 T4 looks like:
 
-	XXX
+	 X
+	XX
 	 X
 */
 func getPositionsPieceT4(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
-	r := max(a, b+1) - 2
+	r := max(a+1, b+2) - 2
 	return []position{
 		position{r, columnIndex + 1},
 		position{r + 1, columnIndex},
