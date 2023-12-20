@@ -22,7 +22,10 @@ func TetrisMove(piece rune, levels []int) int {
 	case 'O':
 		return maxCompletedLines(levels, 2, getPositionsPieceO)
 	case 'S':
-		return -1 // TODO
+		return max(
+			maxCompletedLines(levels, 3, getPositionsPieceS1),
+			maxCompletedLines(levels, 2, getPositionsPieceS2),
+		)
 	case 'T':
 		return max(
 			maxCompletedLines(levels, 3, getPositionsPieceT1),
@@ -165,6 +168,44 @@ func getPositionsPieceO(levels []int, column int) []position {
 		position{row, column + 1},
 		position{row + 1, column},
 		position{row + 1, column + 1},
+	}
+}
+
+/*
+S1 looks like:
+
+	 XX
+	XX
+*/
+func getPositionsPieceS1(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+2, b+2, c+1) - 2
+	return []position{
+		position{row + 0, column + 0},
+		position{row + 0, column + 1},
+		position{row + 1, column + 1},
+		position{row + 1, column + 2},
+	}
+}
+
+/*
+S2 looks like:
+
+	X
+	XX
+	 X
+*/
+func getPositionsPieceS2(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	row := max(a+1, b+2) - 2
+	return []position{
+		position{row + 0, column + 1},
+		position{row + 1, column + 0},
+		position{row + 1, column + 1},
+		position{row + 2, column + 0},
 	}
 }
 
