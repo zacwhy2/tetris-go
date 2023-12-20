@@ -2,6 +2,7 @@ package tetris
 
 type position struct{ row, column int }
 
+// TetrisMove calculates the greatest number of horizontal lines that can be completed when the piece arrives at the bottom assuming it is dropped immediately after being rotated and moved horizontally from the top
 func TetrisMove(piece rune, levels []int) int {
 	switch piece {
 	case 'I':
@@ -25,9 +26,9 @@ func TetrisMove(piece rune, levels []int) int {
 	case 'T':
 		return max(
 			maxCompletedLines(levels, 3, getPositionsPieceT1),
-			maxCompletedLines(levels, 3, getPositionsPieceT2),
+			maxCompletedLines(levels, 2, getPositionsPieceT2),
 			maxCompletedLines(levels, 3, getPositionsPieceT3),
-			maxCompletedLines(levels, 3, getPositionsPieceT4),
+			maxCompletedLines(levels, 2, getPositionsPieceT4),
 		)
 	case 'Z':
 		return -1 // TODO
@@ -35,8 +36,17 @@ func TetrisMove(piece rune, levels []int) int {
 	return -1
 }
 
+/*
+I1 looks like:
+
+	XXXX
+*/
 func getPositionsPieceI1(levels []int, columnIndex int) []position {
-	r := max(levels[columnIndex : columnIndex+4]...)
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	c := levels[columnIndex+2]
+	d := levels[columnIndex+3]
+	r := max(a, b, c, d)
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -45,6 +55,14 @@ func getPositionsPieceI1(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+I2 looks like:
+
+	X
+	X
+	X
+	X
+*/
 func getPositionsPieceI2(levels []int, columnIndex int) []position {
 	r := levels[columnIndex]
 	return []position{
@@ -55,8 +73,17 @@ func getPositionsPieceI2(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+L1 looks like:
+
+	X
+	X
+	XX
+*/
 func getPositionsPieceL1(levels []int, columnIndex int) []position {
-	r := max(levels[columnIndex : columnIndex+2]...)
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	r := max(a, b)
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -65,8 +92,17 @@ func getPositionsPieceL1(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+L2 looks like:
+
+	  X
+	XXX
+*/
 func getPositionsPieceL2(levels []int, columnIndex int) []position {
-	r := max(levels[columnIndex : columnIndex+3]...)
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	c := levels[columnIndex+2]
+	r := max(a, b, c)
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -75,6 +111,13 @@ func getPositionsPieceL2(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+L3 looks like:
+
+	XX
+	 X
+	 X
+*/
 func getPositionsPieceL3(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -87,6 +130,12 @@ func getPositionsPieceL3(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+L4 looks like:
+
+	XXX
+	X
+*/
 func getPositionsPieceL4(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -100,8 +149,16 @@ func getPositionsPieceL4(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+O looks like:
+
+	XX
+	XX
+*/
 func getPositionsPieceO(levels []int, columnIndex int) []position {
-	r := max(levels[columnIndex : columnIndex+2]...)
+	a := levels[columnIndex]
+	b := levels[columnIndex+1]
+	r := max(a, b)
 	return []position{
 		position{r, columnIndex},
 		position{r, columnIndex + 1},
@@ -110,6 +167,12 @@ func getPositionsPieceO(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+T1 looks like:
+
+	 X
+	XXX
+*/
 func getPositionsPieceT1(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -123,6 +186,13 @@ func getPositionsPieceT1(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+T2 looks like:
+
+	X
+	XX
+	X
+*/
 func getPositionsPieceT2(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -135,6 +205,13 @@ func getPositionsPieceT2(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+T3 looks like:
+
+	 X
+	XX
+	 X
+*/
 func getPositionsPieceT3(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -148,6 +225,12 @@ func getPositionsPieceT3(levels []int, columnIndex int) []position {
 	}
 }
 
+/*
+T4 looks like:
+
+	XXX
+	 X
+*/
 func getPositionsPieceT4(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
@@ -158,17 +241,6 @@ func getPositionsPieceT4(levels []int, columnIndex int) []position {
 		position{r + 1, columnIndex + 1},
 		position{r + 2, columnIndex + 1},
 	}
-}
-
-func positionsArrayToMap(ps []position) map[int]map[int]struct{} {
-	positions := map[int]map[int]struct{}{}
-	for _, p := range ps {
-		if _, ok := positions[p.row]; !ok {
-			positions[p.row] = map[int]struct{}{}
-		}
-		positions[p.row][p.column] = struct{}{}
-	}
-	return positions
 }
 
 func maxCompletedLines(
@@ -187,12 +259,22 @@ func maxCompletedLines(
 	return max
 }
 
+func positionsArrayToMap(ps []position) map[int]map[int]struct{} {
+	positions := map[int]map[int]struct{}{}
+	for _, p := range ps {
+		if _, ok := positions[p.row]; !ok {
+			positions[p.row] = map[int]struct{}{}
+		}
+		positions[p.row][p.column] = struct{}{}
+	}
+	return positions
+}
+
 func countCompletedLines(
 	levels []int,
 	piecePositions map[int]map[int]struct{},
 ) int {
 	completedLines := 0
-
 	for rowIndex := 0; ; rowIndex++ {
 		filledCount := 0
 		for columnIndex, level := range levels {
@@ -202,17 +284,14 @@ func countCompletedLines(
 				filledCount++
 			}
 		}
-
-		if filledCount == len(levels) {
-			completedLines++
-		}
-
 		if filledCount == 0 {
 			// stop once there is a whole row that is unfilled
 			break
 		}
+		if filledCount == len(levels) {
+			completedLines++
+		}
 	}
-
 	return completedLines
 }
 
