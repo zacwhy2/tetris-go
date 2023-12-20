@@ -78,10 +78,10 @@ func getPositionsPieceI2(levels []int, column int) []position {
 	a := levels[column+0]
 	row := max(a+1) - 1
 	return []position{
-		{row + 0, column},
-		{row + 1, column},
-		{row + 2, column},
-		{row + 3, column},
+		{row + 0, column + 0},
+		{row + 1, column + 0},
+		{row + 2, column + 0},
+		{row + 3, column + 0},
 	}
 }
 
