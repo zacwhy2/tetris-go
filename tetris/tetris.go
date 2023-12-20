@@ -1,5 +1,7 @@
 package tetris
 
+type position struct{ row, column int }
+
 func TetrisMove(piece rune, levels []int) int {
 	switch piece {
 	case 'I':
@@ -33,142 +35,150 @@ func TetrisMove(piece rune, levels []int) int {
 	return -1
 }
 
-func getPositionsPieceI1(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceI1(levels []int, columnIndex int) []position {
 	r := max(levels[columnIndex : columnIndex+4]...)
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r, columnIndex+2)
-	addPosition(positions, r, columnIndex+3)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r, columnIndex + 1},
+		position{r, columnIndex + 2},
+		position{r, columnIndex + 3},
+	}
 }
 
-func getPositionsPieceI2(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceI2(levels []int, columnIndex int) []position {
 	r := levels[columnIndex]
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+2, columnIndex)
-	addPosition(positions, r+3, columnIndex)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r + 1, columnIndex},
+		position{r + 2, columnIndex},
+		position{r + 3, columnIndex},
+	}
 }
 
-func getPositionsPieceL1(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceL1(levels []int, columnIndex int) []position {
 	r := max(levels[columnIndex : columnIndex+2]...)
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+2, columnIndex)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r, columnIndex + 1},
+		position{r + 1, columnIndex},
+		position{r + 2, columnIndex},
+	}
 }
 
-func getPositionsPieceL2(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceL2(levels []int, columnIndex int) []position {
 	r := max(levels[columnIndex : columnIndex+3]...)
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r, columnIndex+2)
-	addPosition(positions, r+1, columnIndex+2)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r, columnIndex + 1},
+		position{r, columnIndex + 2},
+		position{r + 1, columnIndex + 2},
+	}
 }
 
-func getPositionsPieceL3(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceL3(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	r := max(a+1, b+3) - 3
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r+1, columnIndex+1)
-	addPosition(positions, r+2, columnIndex)
-	addPosition(positions, r+2, columnIndex+1)
-	return positions
+	return []position{
+		position{r, columnIndex + 1},
+		position{r + 1, columnIndex + 1},
+		position{r + 2, columnIndex},
+		position{r + 2, columnIndex + 1},
+	}
 }
 
-func getPositionsPieceL4(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceL4(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
 	r := max(a+2, b+1, c+1) - 2
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex+2)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+1, columnIndex+1)
-	addPosition(positions, r+1, columnIndex+2)
-	return positions
+	return []position{
+		position{r, columnIndex + 2},
+		position{r + 1, columnIndex},
+		position{r + 1, columnIndex + 1},
+		position{r + 1, columnIndex + 2},
+	}
 }
 
-func getPositionsPieceO(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceO(levels []int, columnIndex int) []position {
 	r := max(levels[columnIndex : columnIndex+2]...)
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+1, columnIndex+1)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r, columnIndex + 1},
+		position{r + 1, columnIndex},
+		position{r + 1, columnIndex + 1},
+	}
 }
 
-func getPositionsPieceT1(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceT1(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
 	r := max(a, b, c)
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r, columnIndex+2)
-	addPosition(positions, r+1, columnIndex+1)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r, columnIndex + 1},
+		position{r, columnIndex + 2},
+		position{r + 1, columnIndex + 1},
+	}
 }
 
-func getPositionsPieceT2(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceT2(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	r := max(a+1, b) - 2
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+1, columnIndex+1)
-	addPosition(positions, r+2, columnIndex)
-	return positions
+	return []position{
+		position{r, columnIndex},
+		position{r + 1, columnIndex},
+		position{r + 1, columnIndex + 1},
+		position{r + 2, columnIndex},
+	}
 }
 
-func getPositionsPieceT3(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceT3(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	c := levels[columnIndex+2]
 	r := max(a+1, b+2, c+1) - 2
-	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+1, columnIndex+1)
-	addPosition(positions, r+1, columnIndex+2)
-	return positions
+	return []position{
+		position{r, columnIndex + 1},
+		position{r + 1, columnIndex},
+		position{r + 1, columnIndex + 1},
+		position{r + 1, columnIndex + 2},
+	}
 }
 
-func getPositionsPieceT4(levels []int, columnIndex int) map[int]map[int]struct{} {
+func getPositionsPieceT4(levels []int, columnIndex int) []position {
 	a := levels[columnIndex]
 	b := levels[columnIndex+1]
 	r := max(a, b+1) - 2
+	return []position{
+		position{r, columnIndex + 1},
+		position{r + 1, columnIndex},
+		position{r + 1, columnIndex + 1},
+		position{r + 2, columnIndex + 1},
+	}
+}
+
+func positionsArrayToMap(ps []position) map[int]map[int]struct{} {
 	positions := map[int]map[int]struct{}{}
-	addPosition(positions, r, columnIndex+1)
-	addPosition(positions, r+1, columnIndex)
-	addPosition(positions, r+1, columnIndex+1)
-	addPosition(positions, r+2, columnIndex+1)
+	for _, p := range ps {
+		if _, ok := positions[p.row]; !ok {
+			positions[p.row] = map[int]struct{}{}
+		}
+		positions[p.row][p.column] = struct{}{}
+	}
 	return positions
 }
 
-func addPosition(p map[int]map[int]struct{}, r int, c int) {
-	if _, ok := p[r]; !ok {
-		p[r] = map[int]struct{}{}
-	}
-	p[r][c] = struct{}{}
-}
-
-func maxCompletedLines(levels []int, width int, fn func([]int, int) map[int]map[int]struct{}) int {
+func maxCompletedLines(
+	levels []int,
+	width int,
+	fn func([]int, int) []position,
+) int {
 	max := 0
 	for i := 0; i < len(levels)-width+1; i++ {
-		piecePositions := fn(levels, i)
+		piecePositions := positionsArrayToMap(fn(levels, i))
 		completedLines := countCompletedLines(levels, piecePositions)
 		if completedLines > max {
 			max = completedLines
@@ -177,7 +187,10 @@ func maxCompletedLines(levels []int, width int, fn func([]int, int) map[int]map[
 	return max
 }
 
-func countCompletedLines(levels []int, piecePositions map[int]map[int]struct{}) int {
+func countCompletedLines(
+	levels []int,
+	piecePositions map[int]map[int]struct{},
+) int {
 	completedLines := 0
 
 	for rowIndex := 0; ; rowIndex++ {
