@@ -34,7 +34,10 @@ func TetrisMove(piece rune, levels []int) int {
 			maxCompletedLines(levels, 2, getPositionsPieceT4),
 		)
 	case 'Z':
-		return -1 // TODO
+		return max(
+			maxCompletedLines(levels, 3, getPositionsPieceZ1),
+			maxCompletedLines(levels, 2, getPositionsPieceZ2),
+		)
 	}
 	return -1
 }
@@ -51,10 +54,10 @@ func getPositionsPieceI1(levels []int, column int) []position {
 	d := levels[column+3]
 	row := max(a+1, b+1, c+1, d+1) - 1
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 0, column + 2},
-		position{row + 0, column + 3},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 0, column + 2},
+		{row + 0, column + 3},
 	}
 }
 
@@ -70,10 +73,10 @@ func getPositionsPieceI2(levels []int, column int) []position {
 	a := levels[column+0]
 	row := max(a+1) - 1
 	return []position{
-		position{row + 0, column},
-		position{row + 1, column},
-		position{row + 2, column},
-		position{row + 3, column},
+		{row + 0, column},
+		{row + 1, column},
+		{row + 2, column},
+		{row + 3, column},
 	}
 }
 
@@ -89,10 +92,10 @@ func getPositionsPieceL1(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+1, b+1) - 1
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 1, column + 0},
-		position{row + 2, column + 0},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 1, column + 0},
+		{row + 2, column + 0},
 	}
 }
 
@@ -108,10 +111,10 @@ func getPositionsPieceL2(levels []int, column int) []position {
 	c := levels[column+2]
 	row := max(a+1, b+1, c+1) - 1
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 0, column + 2},
-		position{row + 1, column + 2},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 0, column + 2},
+		{row + 1, column + 2},
 	}
 }
 
@@ -127,10 +130,10 @@ func getPositionsPieceL3(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+1, b+3) - 3
 	return []position{
-		position{row + 0, column + 1},
-		position{row + 1, column + 1},
-		position{row + 2, column + 0},
-		position{row + 2, column + 1},
+		{row + 0, column + 1},
+		{row + 1, column + 1},
+		{row + 2, column + 0},
+		{row + 2, column + 1},
 	}
 }
 
@@ -146,10 +149,10 @@ func getPositionsPieceL4(levels []int, column int) []position {
 	c := levels[column+2]
 	row := max(a+2, b+1, c+1) - 2
 	return []position{
-		position{row + 0, column + 2},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
-		position{row + 1, column + 2},
+		{row + 0, column + 2},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 1, column + 2},
 	}
 }
 
@@ -164,10 +167,10 @@ func getPositionsPieceO(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+1, b+1) - 1
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
 	}
 }
 
@@ -183,10 +186,10 @@ func getPositionsPieceS1(levels []int, column int) []position {
 	c := levels[column+2]
 	row := max(a+2, b+2, c+1) - 2
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 1, column + 1},
-		position{row + 1, column + 2},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 1, column + 1},
+		{row + 1, column + 2},
 	}
 }
 
@@ -202,10 +205,10 @@ func getPositionsPieceS2(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+1, b+2) - 2
 	return []position{
-		position{row + 0, column + 1},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
-		position{row + 2, column + 0},
+		{row + 0, column + 1},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 2, column + 0},
 	}
 }
 
@@ -221,10 +224,10 @@ func getPositionsPieceT1(levels []int, column int) []position {
 	c := levels[column+2]
 	row := max(a+1, b+1, c+1) - 1
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 0, column + 1},
-		position{row + 0, column + 2},
-		position{row + 1, column + 1},
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 0, column + 2},
+		{row + 1, column + 1},
 	}
 }
 
@@ -240,10 +243,10 @@ func getPositionsPieceT2(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+2, b+1) - 2
 	return []position{
-		position{row + 0, column + 0},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
-		position{row + 2, column + 0},
+		{row + 0, column + 0},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 2, column + 0},
 	}
 }
 
@@ -259,10 +262,10 @@ func getPositionsPieceT3(levels []int, column int) []position {
 	c := levels[column+2]
 	row := max(a+1, b+2, c+1) - 2
 	return []position{
-		position{row + 0, column + 1},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
-		position{row + 1, column + 2},
+		{row + 0, column + 1},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 1, column + 2},
 	}
 }
 
@@ -278,10 +281,48 @@ func getPositionsPieceT4(levels []int, column int) []position {
 	b := levels[column+1]
 	row := max(a+1, b+2) - 2
 	return []position{
-		position{row + 0, column + 1},
-		position{row + 1, column + 0},
-		position{row + 1, column + 1},
-		position{row + 2, column + 1},
+		{row + 0, column + 1},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 2, column + 1},
+	}
+}
+
+/*
+Z1 looks like:
+
+	XX
+	 XX
+*/
+func getPositionsPieceZ1(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+2, c+2) - 2
+	return []position{
+		{row + 0, column + 1},
+		{row + 0, column + 2},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+	}
+}
+
+/*
+Z2 looks like:
+
+	 X
+	XX
+	X
+*/
+func getPositionsPieceZ2(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	row := max(a+2, b+1) - 2
+	return []position{
+		{row + 0, column + 0},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 2, column + 1},
 	}
 }
 

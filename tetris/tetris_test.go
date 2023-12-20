@@ -18,6 +18,9 @@ func TestTetrisMove(t *testing.T) {
 		{piece: 'S', levels: []int{5, 5, 5, 5, 5, 1, 0, 5, 5, 5, 5, 5}, want: 2},
 
 		{piece: 'T', levels: []int{3, 4, 4, 5, 6, 2, 0, 2, 5, 3, 6, 6}, want: 2},
+
+		{piece: 'Z', levels: []int{5, 5, 5, 5, 5, 1, 0, 0, 5, 5, 5, 5}, want: 1},
+		{piece: 'Z', levels: []int{5, 5, 5, 5, 5, 0, 1, 5, 5, 5, 5, 5}, want: 2},
 	}
 
 	for _, tt := range tests {
