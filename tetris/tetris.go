@@ -11,7 +11,12 @@ func TetrisMove(piece rune, levels []int) int {
 			maxCompletedLines(levels, 1, getPositionsPieceI2),
 		)
 	case 'J':
-		return -1 // TODO
+		return max(
+			maxCompletedLines(levels, 2, getPositionsPieceJ1),
+			maxCompletedLines(levels, 3, getPositionsPieceJ2),
+			maxCompletedLines(levels, 2, getPositionsPieceJ3),
+			maxCompletedLines(levels, 3, getPositionsPieceJ4),
+		)
 	case 'L':
 		return max(
 			maxCompletedLines(levels, 2, getPositionsPieceL1),
@@ -81,6 +86,82 @@ func getPositionsPieceI2(levels []int, column int) []position {
 }
 
 /*
+J1 looks like:
+
+	 X
+	 X
+	XX
+*/
+func getPositionsPieceJ1(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	row := max(a+1, b+1) - 1
+	return []position{
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 1, column + 1},
+		{row + 2, column + 1},
+	}
+}
+
+/*
+J2 looks like:
+
+	X
+	XXX
+*/
+func getPositionsPieceJ2(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+1, c+1) - 1
+	return []position{
+		{row + 0, column + 0},
+		{row + 0, column + 1},
+		{row + 0, column + 2},
+		{row + 1, column + 0},
+	}
+}
+
+/*
+J3 looks like:
+
+	XX
+	X
+	X
+*/
+func getPositionsPieceJ3(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	row := max(a+3, b+1) - 3
+	return []position{
+		{row + 0, column + 0},
+		{row + 1, column + 0},
+		{row + 2, column + 0},
+		{row + 2, column + 1},
+	}
+}
+
+/*
+J4 looks like:
+
+	XXX
+	  X
+*/
+func getPositionsPieceJ4(levels []int, column int) []position {
+	a := levels[column+0]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+1, c+2) - 2
+	return []position{
+		{row + 0, column + 2},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
+		{row + 1, column + 2},
+	}
+}
+
+/*
 L1 looks like:
 
 	X
@@ -102,18 +183,18 @@ func getPositionsPieceL1(levels []int, column int) []position {
 /*
 L2 looks like:
 
-	  X
 	XXX
+	X
 */
 func getPositionsPieceL2(levels []int, column int) []position {
 	a := levels[column+0]
 	b := levels[column+1]
 	c := levels[column+2]
-	row := max(a+1, b+1, c+1) - 1
+	row := max(a+2, b+1, c+1) - 2
 	return []position{
 		{row + 0, column + 0},
-		{row + 0, column + 1},
-		{row + 0, column + 2},
+		{row + 1, column + 0},
+		{row + 1, column + 1},
 		{row + 1, column + 2},
 	}
 }
@@ -140,18 +221,18 @@ func getPositionsPieceL3(levels []int, column int) []position {
 /*
 L4 looks like:
 
+	  X
 	XXX
-	X
 */
 func getPositionsPieceL4(levels []int, column int) []position {
 	a := levels[column+0]
 	b := levels[column+1]
 	c := levels[column+2]
-	row := max(a+2, b+1, c+1) - 2
+	row := max(a+1, b+1, c+1) - 1
 	return []position{
+		{row + 0, column + 0},
+		{row + 0, column + 1},
 		{row + 0, column + 2},
-		{row + 1, column + 0},
-		{row + 1, column + 1},
 		{row + 1, column + 2},
 	}
 }
