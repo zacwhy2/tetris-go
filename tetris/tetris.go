@@ -41,17 +41,17 @@ I1 looks like:
 
 	XXXX
 */
-func getPositionsPieceI1(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	c := levels[columnIndex+2]
-	d := levels[columnIndex+3]
-	r := max(a+1, b+1, c+1, d+1) - 1
+func getPositionsPieceI1(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	c := levels[column+2]
+	d := levels[column+3]
+	row := max(a+1, b+1, c+1, d+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r, columnIndex + 1},
-		position{r, columnIndex + 2},
-		position{r, columnIndex + 3},
+		position{row, column},
+		position{row, column + 1},
+		position{row, column + 2},
+		position{row, column + 3},
 	}
 }
 
@@ -63,14 +63,14 @@ I2 looks like:
 	X
 	X
 */
-func getPositionsPieceI2(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	r := max(a+1) - 1
+func getPositionsPieceI2(levels []int, column int) []position {
+	a := levels[column]
+	row := max(a+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r + 1, columnIndex},
-		position{r + 2, columnIndex},
-		position{r + 3, columnIndex},
+		position{row, column},
+		position{row + 1, column},
+		position{row + 2, column},
+		position{row + 3, column},
 	}
 }
 
@@ -81,15 +81,15 @@ L1 looks like:
 	X
 	XX
 */
-func getPositionsPieceL1(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	r := max(a+1, b+1) - 1
+func getPositionsPieceL1(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	row := max(a+1, b+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r, columnIndex + 1},
-		position{r + 1, columnIndex},
-		position{r + 2, columnIndex},
+		position{row, column},
+		position{row, column + 1},
+		position{row + 1, column},
+		position{row + 2, column},
 	}
 }
 
@@ -99,16 +99,16 @@ L2 looks like:
 	  X
 	XXX
 */
-func getPositionsPieceL2(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	c := levels[columnIndex+2]
-	r := max(a+1, b+1, c+1) - 1
+func getPositionsPieceL2(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+1, c+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r, columnIndex + 1},
-		position{r, columnIndex + 2},
-		position{r + 1, columnIndex + 2},
+		position{row, column},
+		position{row, column + 1},
+		position{row, column + 2},
+		position{row + 1, column + 2},
 	}
 }
 
@@ -119,15 +119,15 @@ L3 looks like:
 	 X
 	 X
 */
-func getPositionsPieceL3(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	r := max(a+1, b+3) - 3
+func getPositionsPieceL3(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	row := max(a+1, b+3) - 3
 	return []position{
-		position{r, columnIndex + 1},
-		position{r + 1, columnIndex + 1},
-		position{r + 2, columnIndex},
-		position{r + 2, columnIndex + 1},
+		position{row, column + 1},
+		position{row + 1, column + 1},
+		position{row + 2, column},
+		position{row + 2, column + 1},
 	}
 }
 
@@ -137,16 +137,16 @@ L4 looks like:
 	XXX
 	X
 */
-func getPositionsPieceL4(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	c := levels[columnIndex+2]
-	r := max(a+2, b+1, c+1) - 2
+func getPositionsPieceL4(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+2, b+1, c+1) - 2
 	return []position{
-		position{r, columnIndex + 2},
-		position{r + 1, columnIndex},
-		position{r + 1, columnIndex + 1},
-		position{r + 1, columnIndex + 2},
+		position{row, column + 2},
+		position{row + 1, column},
+		position{row + 1, column + 1},
+		position{row + 1, column + 2},
 	}
 }
 
@@ -156,15 +156,15 @@ O looks like:
 	XX
 	XX
 */
-func getPositionsPieceO(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	r := max(a+1, b+1) - 1
+func getPositionsPieceO(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	row := max(a+1, b+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r, columnIndex + 1},
-		position{r + 1, columnIndex},
-		position{r + 1, columnIndex + 1},
+		position{row, column},
+		position{row, column + 1},
+		position{row + 1, column},
+		position{row + 1, column + 1},
 	}
 }
 
@@ -174,16 +174,16 @@ T1 looks like:
 	 X
 	XXX
 */
-func getPositionsPieceT1(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	c := levels[columnIndex+2]
-	r := max(a+1, b+1, c+1) - 1
+func getPositionsPieceT1(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+1, c+1) - 1
 	return []position{
-		position{r, columnIndex},
-		position{r, columnIndex + 1},
-		position{r, columnIndex + 2},
-		position{r + 1, columnIndex + 1},
+		position{row, column},
+		position{row, column + 1},
+		position{row, column + 2},
+		position{row + 1, column + 1},
 	}
 }
 
@@ -194,15 +194,15 @@ T2 looks like:
 	XX
 	X
 */
-func getPositionsPieceT2(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	r := max(a+2, b+1) - 2
+func getPositionsPieceT2(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	row := max(a+2, b+1) - 2
 	return []position{
-		position{r, columnIndex},
-		position{r + 1, columnIndex},
-		position{r + 1, columnIndex + 1},
-		position{r + 2, columnIndex},
+		position{row, column},
+		position{row + 1, column},
+		position{row + 1, column + 1},
+		position{row + 2, column},
 	}
 }
 
@@ -212,16 +212,16 @@ T3 looks like:
 	XXX
 	 X
 */
-func getPositionsPieceT3(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	c := levels[columnIndex+2]
-	r := max(a+1, b+2, c+1) - 2
+func getPositionsPieceT3(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	c := levels[column+2]
+	row := max(a+1, b+2, c+1) - 2
 	return []position{
-		position{r, columnIndex + 1},
-		position{r + 1, columnIndex},
-		position{r + 1, columnIndex + 1},
-		position{r + 1, columnIndex + 2},
+		position{row, column + 1},
+		position{row + 1, column},
+		position{row + 1, column + 1},
+		position{row + 1, column + 2},
 	}
 }
 
@@ -232,15 +232,15 @@ T4 looks like:
 	XX
 	 X
 */
-func getPositionsPieceT4(levels []int, columnIndex int) []position {
-	a := levels[columnIndex]
-	b := levels[columnIndex+1]
-	r := max(a+1, b+2) - 2
+func getPositionsPieceT4(levels []int, column int) []position {
+	a := levels[column]
+	b := levels[column+1]
+	row := max(a+1, b+2) - 2
 	return []position{
-		position{r, columnIndex + 1},
-		position{r + 1, columnIndex},
-		position{r + 1, columnIndex + 1},
-		position{r + 2, columnIndex + 1},
+		position{row, column + 1},
+		position{row + 1, column},
+		position{row + 1, column + 1},
+		position{row + 2, column + 1},
 	}
 }
 
