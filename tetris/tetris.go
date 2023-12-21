@@ -2,7 +2,9 @@ package tetris
 
 type position struct{ row, column int }
 
-// TetrisMove calculates the greatest number of horizontal lines that can be completed when the piece arrives at the bottom assuming it is dropped immediately after being rotated and moved horizontally from the top
+// TetrisMove calculates the greatest number of horizontal lines that can be
+// completed when the piece arrives at the bottom assuming it is dropped
+// immediately after being rotated and moved horizontally from the top.
 func TetrisMove(piece rune, levels []int) int {
 	switch piece {
 	case 'I':
