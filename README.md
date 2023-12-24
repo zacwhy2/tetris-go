@@ -4,5 +4,5 @@
 
 To run test:
 ```
-$ go test -v ./tetris/
+$ go test -v
 ```
