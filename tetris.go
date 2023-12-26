@@ -101,8 +101,8 @@ func getPositionsPieceJ1(levels []int, column int) []position {
 	return []position{
 		{row + 0, column + 0},
 		{row + 0, column + 1},
-		{row + 1, column + 1},
-		{row + 2, column + 1},
+		// {row + 1, column + 1},
+		// {row + 2, column + 1},
 	}
 }
 
@@ -121,7 +121,7 @@ func getPositionsPieceJ2(levels []int, column int) []position {
 		{row + 0, column + 0},
 		{row + 0, column + 1},
 		{row + 0, column + 2},
-		{row + 1, column + 0},
+		// {row + 1, column + 0},
 	}
 }
 
@@ -177,8 +177,8 @@ func getPositionsPieceL1(levels []int, column int) []position {
 	return []position{
 		{row + 0, column + 0},
 		{row + 0, column + 1},
-		{row + 1, column + 0},
-		{row + 2, column + 0},
+		// {row + 1, column + 0},
+		// {row + 2, column + 0},
 	}
 }
 
@@ -235,7 +235,7 @@ func getPositionsPieceL4(levels []int, column int) []position {
 		{row + 0, column + 0},
 		{row + 0, column + 1},
 		{row + 0, column + 2},
-		{row + 1, column + 2},
+		// {row + 1, column + 2},
 	}
 }
 
@@ -271,8 +271,8 @@ func getPositionsPieceS1(levels []int, column int) []position {
 	return []position{
 		{row + 0, column + 0},
 		{row + 0, column + 1},
-		{row + 1, column + 1},
-		{row + 1, column + 2},
+		// {row + 1, column + 1},
+		// {row + 1, column + 2},
 	}
 }
 
@@ -291,7 +291,7 @@ func getPositionsPieceS2(levels []int, column int) []position {
 		{row + 0, column + 1},
 		{row + 1, column + 0},
 		{row + 1, column + 1},
-		{row + 2, column + 0},
+		// {row + 2, column + 0},
 	}
 }
 
@@ -310,7 +310,7 @@ func getPositionsPieceT1(levels []int, column int) []position {
 		{row + 0, column + 0},
 		{row + 0, column + 1},
 		{row + 0, column + 2},
-		{row + 1, column + 1},
+		// {row + 1, column + 1},
 	}
 }
 
@@ -329,7 +329,7 @@ func getPositionsPieceT2(levels []int, column int) []position {
 		{row + 0, column + 0},
 		{row + 1, column + 0},
 		{row + 1, column + 1},
-		{row + 2, column + 0},
+		// {row + 2, column + 0},
 	}
 }
 
@@ -367,7 +367,7 @@ func getPositionsPieceT4(levels []int, column int) []position {
 		{row + 0, column + 1},
 		{row + 1, column + 0},
 		{row + 1, column + 1},
-		{row + 2, column + 1},
+		// {row + 2, column + 1},
 	}
 }
 
@@ -385,8 +385,8 @@ func getPositionsPieceZ1(levels []int, column int) []position {
 	return []position{
 		{row + 0, column + 1},
 		{row + 0, column + 2},
-		{row + 1, column + 0},
-		{row + 1, column + 1},
+		// {row + 1, column + 0},
+		// {row + 1, column + 1},
 	}
 }
 
@@ -405,13 +405,12 @@ func getPositionsPieceZ2(levels []int, column int) []position {
 		{row + 0, column + 0},
 		{row + 1, column + 0},
 		{row + 1, column + 1},
-		{row + 2, column + 1},
+		// {row + 2, column + 1},
 	}
 }
 
 func maxCompletedLines(
-	levels []int,
-	width int,
+	levels []int, width int,
 	getPositions func([]int, int) []position,
 ) int {
 	max := 0
@@ -440,19 +439,13 @@ func countCompletedLines(
 	levels []int,
 	piecePositions map[int]map[int]struct{},
 ) int {
-	completedLines := 0
-	for rowIndex := 0; ; rowIndex++ {
+	completedLines := min(levels...)
+	for row := range piecePositions {
 		filledCount := 0
-		for columnIndex, level := range levels {
-			if level > rowIndex {
-				filledCount++
-			} else if _, ok := piecePositions[rowIndex][columnIndex]; ok {
+		for column, level := range levels {
+			if _, ok := piecePositions[row][column]; ok || level > row {
 				filledCount++
 			}
-		}
-		if filledCount == 0 {
-			// stop once there is a whole row that is unfilled
-			break
 		}
 		if filledCount == len(levels) {
 			completedLines++
@@ -461,12 +454,25 @@ func countCompletedLines(
 	return completedLines
 }
 
+func min(numbers ...int) int {
+	min, _ := minmax(numbers...)
+	return min
+}
+
 func max(numbers ...int) int {
-	max := numbers[0]
+	_, max := minmax(numbers...)
+	return max
+}
+
+func minmax(numbers ...int) (int, int) {
+	min, max := numbers[0], numbers[0]
 	for _, number := range numbers {
+		if number < min {
+			min = number
+		}
 		if number > max {
 			max = number
 		}
 	}
-	return max
+	return min, max
 }
